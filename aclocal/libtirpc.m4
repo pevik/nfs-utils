@@ -25,6 +25,10 @@ AC_DEFUN([AC_LIBTIRPC], [
                          [AC_DEFINE([HAVE_LIBTIRPC_SET_DEBUG], [1],
                                     [Define to 1 if your tirpc library provides libtirpc_set_debug])],,
                          [${LIBS}])])
+     AS_IF([test "$enable_gss" = "yes"],
+           [AC_CHECK_MEMBER(struct rpc_gss_sec.minor_status,,
+                         [AC_MSG_ERROR([Missing rpc_gss_sec.minor_status in <rpc/auth_gss.h>, update libtirpc or run with --disable-gss])],
+                         [#include <rpc/auth_gss.h>])])
 
   AC_SUBST([AM_CPPFLAGS])
   AC_SUBST(LIBTIRPC)
